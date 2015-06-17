@@ -13,6 +13,7 @@ int globvar = 6;
 int main(int argc, char **argv)
 {
 	int var;
+	int ret;
 	pid_t pid;
 
 	var = 88;
@@ -23,8 +24,11 @@ int main(int argc, char **argv)
 	{
 		globvar ++;
 		var ++;
+		fclose(stdout);
 		exit(0);
 	}
-	printf("pid = %ld, globvar = %d, var = %d\n", (long)getpid(), globvar, var);
-	_exit(0);
+	ret = printf("pid = %ld, globvar = %d, var = %d\n", (long)getpid(), globvar, var);
+	if(ret != -1)
+		printf("stdout has not been closed, ret = %d\n", ret);
+	exit(0);
 }
